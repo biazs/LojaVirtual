@@ -38,8 +38,10 @@
                 <div>
                     <article class="card" >
                         <div class="card-body p-5">
-                            <p class="alert alert-success">Mensagem de sucesso!</p>
-
+                            @if (ViewData["MSG_M"] != null)
+                            {
+                                <p class="alert alert-success">@ViewData["MSG_M"]</p>
+                            }                            
                             <form role="form" method="post" action="/Home/ContatoAcao">
                                 <div class="form-group">
                                     <label for="nome">Nome</label>
