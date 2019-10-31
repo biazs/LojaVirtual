@@ -1,4 +1,4 @@
-﻿
+﻿@model LojaVirtual.Models.NewsletterEmail
 @{
     ViewData["Title"] = "Index";
 }
@@ -160,6 +160,8 @@
         </div> <!-- row.// -->
     </div>
 
+@using (Html.BeginForm("index", "home", FormMethod.Post))
+{
     <form role="form" method="post" action="/Home/ContatoAcao">
         <div class="container">
             <div class="row">
@@ -171,6 +173,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                             </div>
+                            @Html.EditorFor(m=>m.Email)
                             <input type="text" id="nome" class="form-control" name="nome" placeholder=""
                                     required="" value="">
                         </div>
@@ -183,3 +186,4 @@
         </div>
     </div>
     </form>
+}
