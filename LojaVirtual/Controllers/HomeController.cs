@@ -13,10 +13,18 @@ namespace LojaVirtual.Controllers
 {
     public class HomeController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
-            var news = new NewsletterEmail() { Email = "fabianazs@gmail.com" };
-            return View(news);
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index([FromForm]NewsletterEmail newsletter)
+        {
+            //TODO - Adição no Banco de dados
+            //TODO - Validações
+            return View();
         }
 
         public IActionResult Contato()
