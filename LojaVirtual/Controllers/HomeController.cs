@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mime;
 using System.Threading.Tasks;
 using LojaVirtual.Libraries.Email;
 using LojaVirtual.Models;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using LojaVirtual.Database;
+
 
 namespace LojaVirtual.Controllers
 {
@@ -30,7 +30,7 @@ namespace LojaVirtual.Controllers
         public IActionResult Index([FromForm]NewsletterEmail newsletter)
         {
             if (ModelState.IsValid)
-            {                
+            {
                 _banco.NewsletterEmails.Add(newsletter);
                 _banco.SaveChanges();
 
@@ -39,10 +39,11 @@ namespace LojaVirtual.Controllers
                 return RedirectToAction(nameof(Index));
             }
             else
-            {                
+            {
                 return View();
-            }            
+            }
         }
+
 
         public IActionResult Contato()
         {
