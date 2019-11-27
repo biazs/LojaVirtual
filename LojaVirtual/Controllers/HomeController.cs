@@ -97,36 +97,38 @@ namespace LojaVirtual.Controllers
             return View();
         }
 
+
         [HttpPost]
         public IActionResult Login([FromForm]Cliente cliente)
         {
-            if(cliente.Email == "fabiana@email.com" && cliente.Senha == "1234")
+            if (cliente.Email == "fabiana@email.com" && cliente.Senha == "1234")
             {
                 HttpContext.Session.Set("ID", new byte[] { 52 });
                 HttpContext.Session.SetString("Email", cliente.Email);
-                HttpContext.Session.SetInt32("Idade", 34);
+                HttpContext.Session.SetInt32("Idade", 25);
 
-                return new ContentResult() { Content="Logado" };                
+                return new ContentResult() { Content = "Logado!" };
             }
             else
             {
-                return new ContentResult() { Content = "Não Logado" };
-            }            
+                return new ContentResult() { Content = "Não logado!" };
+            }
         }
+
 
         [HttpGet]
         public IActionResult Painel()
         {
+
             byte[] UsuarioID;
             if (HttpContext.Session.TryGetValue("ID", out UsuarioID))
             {
-                return new ContentResult() { Content = "Usuário " + UsuarioID[0] + " logado!" };
+                return new ContentResult() { Content = "Usuário " + UsuarioID[0] + ". Logado!" };
             }
             else
             {
-                return new ContentResult() { Content = "Usuário negado." };
+                return new ContentResult() { Content = "Acesso negado." };
             }
-
         }
 
         [HttpGet]
