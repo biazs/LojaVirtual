@@ -17,7 +17,6 @@ namespace LojaVirtual.Controllers
     {
         private IClienteRepository _repositoryCliente;
         private INewsletterRepository _repositoryNewsletter;
-
         public HomeController(IClienteRepository repositoryCliente, INewsletterRepository repositoryNewsletter)
         {
             _repositoryCliente = repositoryCliente;
@@ -37,8 +36,8 @@ namespace LojaVirtual.Controllers
             {
                 _repositoryNewsletter.Cadastrar(newsletter);
 
-                TempData["MSG_S"] = "E-mail cadastrado! Agora você receberá promoções especiais! Fique atento as novidades!";
-                
+                TempData["MSG_S"] = "E-mail cadastrado! Agora você vai receber promoções especiais no seu e-mail! Fique atento as novidades!";
+
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -47,12 +46,10 @@ namespace LojaVirtual.Controllers
             }
         }
 
-
         public IActionResult Contato()
         {
             return View();
         }
-
         public IActionResult ContatoAcao()
         {
             try
@@ -62,41 +59,47 @@ namespace LojaVirtual.Controllers
                 contato.Email = HttpContext.Request.Form["email"];
                 contato.Texto = HttpContext.Request.Form["texto"];
 
-                var ListaMensagens = new List<ValidationResult>();
+                var listaMensagens = new List<ValidationResult>();
                 var contexto = new ValidationContext(contato);
-                bool isValid = Validator.TryValidateObject(contato, contexto, ListaMensagens, true);
+                bool isValid = Validator.TryValidateObject(contato, contexto, listaMensagens, true);
 
                 if (isValid)
                 {
-
                     ContatoEmail.EnviarContatoPorEmail(contato);
+
                     ViewData["MSG_S"] = "Mensagem de contato enviado com sucesso!";
                 }
                 else
                 {
                     StringBuilder sb = new StringBuilder();
-                    foreach(var texto in ListaMensagens)
+                    foreach (var texto in listaMensagens)
                     {
                         sb.Append(texto.ErrorMessage + "<br />");
                     }
+
                     ViewData["MSG_E"] = sb.ToString();
                     ViewData["CONTATO"] = contato;
                 }
-            }
-            catch(Exception e){
-                ViewData["MSG_E"] = "Oops! Tivemos um erro, tente novamente mais tarde";
 
-                //TODO - Implementar log
+
             }
+            catch (Exception e)
+            {
+                ViewData["MSG_E"] = "Opps! Tivemos um erro, tente novamente mais tarde!";
+
+                //TODO - Implementar Log
+            }
+
 
             return View("Contato");
         }
+
+
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
-
 
         [HttpPost]
         public IActionResult Login([FromForm]Cliente cliente)
@@ -115,7 +118,6 @@ namespace LojaVirtual.Controllers
             }
         }
 
-
         [HttpGet]
         public IActionResult Painel()
         {
@@ -123,7 +125,7 @@ namespace LojaVirtual.Controllers
             byte[] UsuarioID;
             if (HttpContext.Session.TryGetValue("ID", out UsuarioID))
             {
-                return new ContentResult() { Content = "Usuário " + UsuarioID[0] + ". Logado!" };
+                return new ContentResult() { Content = "Usuário " + UsuarioID[0] + ". E-mail: " + HttpContext.Session.GetString("Email") + " - Idade: + " + HttpContext.Session.GetInt32("Idade") + "Logado!" };
             }
             else
             {
@@ -136,7 +138,6 @@ namespace LojaVirtual.Controllers
         {
             return View();
         }
-
         [HttpPost]
         public IActionResult CadastroCliente([FromForm]Cliente cliente)
         {
@@ -144,11 +145,10 @@ namespace LojaVirtual.Controllers
             {
                 _repositoryCliente.Cadastrar(cliente);
 
-                TempData["MSG_S"] = "Cadastro realizado com sucesso";
+                TempData["MSG_S"] = "Cadastro realizado com sucesso!";
 
-                //TODO - Implementar redirecionamentos diferentes (painel, carrinho de compras, etc)
+                //TODO - Implementar redirecionamentos diferentes (Painel, Carrinho de Compras etc).
                 return RedirectToAction(nameof(CadastroCliente));
-
             }
             return View();
         }
