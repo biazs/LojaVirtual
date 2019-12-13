@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using LojaVirtual.Repositories;
 using LojaVirtual.Repositories.Contracts;
+using LojaVirtual.Libraries.Session;
 
 namespace LojaVirtual
 {
@@ -29,6 +30,7 @@ namespace LojaVirtual
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();            
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<INewsletterRepository, NewsletterRepository>();
 
@@ -45,6 +47,7 @@ namespace LojaVirtual
 
             });
 
+            services.AddScoped<Session>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
