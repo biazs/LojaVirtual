@@ -129,7 +129,10 @@ namespace LojaVirtual.Controllers
 
             if (cliente != null)        
             {
-                return new ContentResult() { Content = "Usuário " + cliente.Id + ". E-mail: " + cliente.Email + " - Idade: " + DateTime.Now.AddYears(cliente.Nascimento.Year) + " Logado!" };
+                return new ContentResult() { Content = "Usuário " + cliente.Id 
+                    + ". E-mail: " + cliente.Email 
+                    + " - Idade: " + DateTime.Now.AddYears(-cliente.Nascimento.Year).ToString("yy") 
+                    + "\n Logado!" };
             }
             else
             {

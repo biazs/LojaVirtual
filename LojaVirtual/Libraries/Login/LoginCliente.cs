@@ -26,9 +26,16 @@ namespace LojaVirtual.Libraries.Login
         public Cliente GetCliente()
         {
             //Deserializar
-            string clienteJSONString = _session.Consultar(key);
+            if(_session.Existe(key))
+            {
+                string clienteJSONString = _session.Consultar(key);
 
-            return JsonConvert.DeserializeObject<Cliente>(clienteJSONString);
+                return JsonConvert.DeserializeObject<Cliente>(clienteJSONString);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public void Logout()
