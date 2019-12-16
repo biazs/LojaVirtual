@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using LojaVirtual.Repositories;
 using LojaVirtual.Repositories.Contracts;
 using LojaVirtual.Libraries.Session;
+using LojaVirtual.Libraries.Login;
 
 namespace LojaVirtual
 {
@@ -48,6 +49,7 @@ namespace LojaVirtual
             });
 
             services.AddScoped<Session>();
+            services.AddScoped<LoginCliente>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

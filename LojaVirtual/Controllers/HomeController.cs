@@ -10,6 +10,7 @@ using System.Text;
 using LojaVirtual.Database;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Http;
+using LojaVirtual.Libraries.Login;
 
 namespace LojaVirtual.Controllers
 {
@@ -17,10 +18,12 @@ namespace LojaVirtual.Controllers
     {
         private IClienteRepository _repositoryCliente;
         private INewsletterRepository _repositoryNewsletter;
-        public HomeController(IClienteRepository repositoryCliente, INewsletterRepository repositoryNewsletter)
+        private LoginCliente _loginCliente;
+        public HomeController(IClienteRepository repositoryCliente, INewsletterRepository repositoryNewsletter, LoginCliente loginCliente)
         {
             _repositoryCliente = repositoryCliente;
             _repositoryNewsletter = repositoryNewsletter;
+            _loginCliente = loginCliente;
         }
 
         [HttpGet]
@@ -104,28 +107,29 @@ namespace LojaVirtual.Controllers
         [HttpPost]
         public IActionResult Login([FromForm]Cliente cliente)
         {
-            if (cliente.Email == "fabiana@email.com" && cliente.Senha == "1234")
-            {
-                HttpContext.Session.Set("ID", new byte[] { 52 });
-                HttpContext.Session.SetString("Email", cliente.Email);
-                HttpContext.Session.SetInt32("Idade", 25);
+            Cliente clienteDB = _repositoryCliente.Login(cliente.Email, cliente.Senha);
 
-                return new ContentResult() { Content = "Logado!" };
+            if(clienteDB != null)
+            {
+                _loginCliente.Login(clienteDB);
+
+                return new RedirectResult(Url.Action(nameof(Painel)));
             }
             else
             {
-                return new ContentResult() { Content = "Não logado!" };
+                ViewData["MSG_E"] = "Usuário não encontrado, verifique o e-mail e senha informado.";
+                return View();
             }
         }
 
         [HttpGet]
         public IActionResult Painel()
-        {
+        {            
+            Cliente cliente = _loginCliente.GetCliente();            
 
-            byte[] UsuarioID;
-            if (HttpContext.Session.TryGetValue("ID", out UsuarioID))
+            if (cliente != null)        
             {
-                return new ContentResult() { Content = "Usuário " + UsuarioID[0] + ". E-mail: " + HttpContext.Session.GetString("Email") + " - Idade: + " + HttpContext.Session.GetInt32("Idade") + "Logado!" };
+                return new ContentResult() { Content = "Usuário " + cliente.Id + ". E-mail: " + cliente.Email + " - Idade: " + DateTime.Now.AddYears(cliente.Nascimento.Year) + " Logado!" };
             }
             else
             {
