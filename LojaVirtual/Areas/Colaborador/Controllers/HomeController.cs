@@ -16,8 +16,8 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
 
         public HomeController(IColaboradorRepository repositoryColaborador, LoginColaborador loginColaborador)
         {
-            _repositoryColaborador = _repositoryColaborador;
-            loginColaborador = _loginColaborador;
+            _repositoryColaborador = repositoryColaborador;
+            _loginColaborador = loginColaborador;
         }
 
         [HttpGet]
@@ -46,7 +46,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
 
         public IActionResult Painel()
         {
-            return View;
+            return View();
         }
 
         public IActionResult RecuperarSenha()
