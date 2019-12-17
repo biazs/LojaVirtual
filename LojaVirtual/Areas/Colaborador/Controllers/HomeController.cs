@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LojaVirtual.Libraries.Filtro;
 using LojaVirtual.Libraries.Login;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
@@ -44,6 +45,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             }
         }
 
+        [ColaboradorAutorizacao]
         public IActionResult Painel()
         {
             return View();
