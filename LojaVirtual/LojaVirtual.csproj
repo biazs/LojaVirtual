@@ -42,7 +42,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Colaborador\Models\" />
-    <Folder Include="Areas\Colaborador\Views\" />
   </ItemGroup>
 
 </Project>
