@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LojaVirtual.Libraries.Filtro;
 using LojaVirtual.Models;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LojaVirtual.Areas.Colaborador.Controllers
 {
+    [Area("Colaborador")] 
+    //[ColaboradorAutorizacao] TODO: Habilitar verificação de login
     public class CategoriaController : Controller
     {
         private ICategoriaRepository _categoriaRepository;
@@ -20,7 +23,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         public IActionResult Index()
         {
             List<Categoria> categorias = _categoriaRepository.ObterTodasCategorias().ToList();
-            return View();
+            return View(categorias);
         }
 
         [HttpGet]
