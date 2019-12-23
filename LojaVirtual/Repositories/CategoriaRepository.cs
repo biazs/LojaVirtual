@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
+using Microsoft.EntityFrameworkCore;
 
 namespace LojaVirtual.Repositories
 {
@@ -46,7 +47,7 @@ namespace LojaVirtual.Repositories
 		public IPagedList<Categoria> ObterTodasCategorias(int? pagina)
 		{
 			int numeroPagina = pagina ?? 1;
-			return _banco.Categorias.ToPagedList<Categoria>(numeroPagina, _registroPorPagina);
+			return _banco.Categorias.Include(a=>a.CategoriaPai).ToPagedList<Categoria>(numeroPagina, _registroPorPagina);
 		}
 	}
 }
