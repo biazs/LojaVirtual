@@ -1,0 +1,36 @@
+https://github.com/Spacedu/ASPNETCoreMVCLojaVirtual
+
+//Instalar github extension for Visual Studio
+Extensoes - online - github
+
+# Atualizar Visual Studio
+Abrir Visual Studio Installer
+
+//Incluir novo componente:
+Abrir Visual Studio Installer e clicar em modificar
+
+//Internet - Hardware
+
+
+//Criar BD 
+-> Tools - Nuget Package Manager - Package Manager Console
+Digitar:
+Add-Migration (que gera o código para atualizar o banco de dados de acordo com as alterações feitas no modelo de entidades;)
+Update-Database (que vai aplicar as alterações pendentes no banco de dado)
+
+
+
+
+//Nao serao vistos no curso
+- Entity Framework avancado
+- Criacao de apis
+- Identity
+- Testes
+
+
+
+
+	//Xamarin
+	//Configuracao e emuladores
+	Ativar modo desenvolvedor no windows 10
+	Iniciar - configuracoes - atualizacao e seguranca - para desenvolvedores - modo de desenvolvedor
