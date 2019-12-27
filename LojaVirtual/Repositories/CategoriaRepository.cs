@@ -39,7 +39,7 @@ namespace LojaVirtual.Repositories
             _banco.SaveChanges();
         }
 
-        public Categoria ObterCategoria(int Id)
+        public Categoria ObterCategoria(int? Id)
         {
             return _banco.Categorias.Find(Id);
         }
