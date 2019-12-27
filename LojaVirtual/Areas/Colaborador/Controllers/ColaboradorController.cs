@@ -4,20 +4,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
 
 namespace LojaVirtual.Areas.Colaborador.Controllers
 {
+    [Area("Colaborador")]
     public class ColaboradorController : Controller
     {
         private IColaboradorRepository _colaboradorRepository;
         public ColaboradorController(IColaboradorRepository colaboradorRepository)
         {
-            _colaboradorRepository = _colaboradorRepository;
+            _colaboradorRepository = colaboradorRepository;
         }
 
         public IActionResult Index(int? pagina)
         {
-            return View();
+            IPagedList<Models.Colaborador> colaborador = _colaboradorRepository.ObterTodosColaboradores(pagina);
+            
+            return View(colaborador);
         }
 
         [HttpGet]
