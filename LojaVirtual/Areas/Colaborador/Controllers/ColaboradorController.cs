@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LojaVirtual.Libraries.Lang;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using X.PagedList;
@@ -33,6 +34,13 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         [HttpPost]
         public IActionResult Cadastrar([FromForm]Models.Colaborador colaborador)
         {
+            if (ModelState.IsValid)
+            {
+                _colaboradorRepository.Cadastrar(colaborador);
+                TempData["MSG_S"] = Mensagem.MSG_S001;
+
+                return RedirectToAction(nameof(Index));
+            }
             return View();
         }
 
