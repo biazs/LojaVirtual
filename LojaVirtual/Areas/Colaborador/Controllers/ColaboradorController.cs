@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using LojaVirtual.Libraries.Lang;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using X.PagedList;
 
 namespace LojaVirtual.Areas.Colaborador.Controllers
@@ -36,6 +37,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         {
             if (ModelState.IsValid)
             {
+                colaborador.Tipo = "C";
                 _colaboradorRepository.Cadastrar(colaborador);
                 TempData["MSG_S"] = Mensagem.MSG_S001;
 
@@ -47,19 +49,29 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         [HttpGet]
         public IActionResult Atualizar(int id)
         {
-            return View();
+            var colaborador = _colaboradorRepository.ObterColaborador(id);
+            return View(colaborador);
         }
 
         [HttpPost]
         public IActionResult Atualizar([FromForm]Models.Colaborador colaborador, int id)
         {
+            if (ModelState.IsValid)
+            {
+                _colaboradorRepository.Atualizar(colaborador);
+                TempData["MSG_S"] = Mensagem.MSG_S001;
+                return RedirectToAction(nameof(Index));
+            }
+            ViewBag.Colaboradores = _colaboradorRepository.ObterTodosColaboradores(id).Where(a => a.Id != id).Select(a => new SelectListItem(a.Nome, a.Id.ToString()));
             return View();
         }
 
         [HttpGet]
         public IActionResult Excluir(int id)
         {
-            return View();
+            _colaboradorRepository.Excluir(id);
+            TempData["MSG_S"] = Mensagem.MSG_S002;
+            return RedirectToAction(nameof(Index));
         }
     }
 }
