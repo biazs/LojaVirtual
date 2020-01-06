@@ -49,7 +49,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         [HttpGet]
         public IActionResult Atualizar(int id)
         {
-            var colaborador = _colaboradorRepository.ObterColaborador(id);
+            Models.Colaborador colaborador = _colaboradorRepository.ObterColaborador(id);
             return View(colaborador);
         }
 
