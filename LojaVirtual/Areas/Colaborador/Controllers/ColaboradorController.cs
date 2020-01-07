@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LojaVirtual.Libraries.Lang;
+using LojaVirtual.Libraries.Texto;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -37,12 +38,23 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         {
             if (ModelState.IsValid)
             {
+                //TODO - Gerar senha aelatoria, salvar nova, enviar e-mail
                 colaborador.Tipo = "C";
                 _colaboradorRepository.Cadastrar(colaborador);
                 TempData["MSG_S"] = Mensagem.MSG_S001;
 
                 return RedirectToAction(nameof(Index));
             }
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult GerarSenha(int id)
+        {
+            //TODO - Gerar senha aelatoria, salvar nova, enviar e-mail
+            Models.Colaborador colaborador = _colaboradorRepository.ObterColaborador(id);
+            colaborador .Senha = KeyGenerator.GetUniqueKey(8);
+            _colaboradorRepository.Atualizar(colaborador);
             return View();
         }
 
