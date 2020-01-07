@@ -16,6 +16,8 @@ using LojaVirtual.Repositories;
 using LojaVirtual.Repositories.Contracts;
 using LojaVirtual.Libraries.Session;
 using LojaVirtual.Libraries.Login;
+using System.Net.Mail;
+using System.Net;
 
 namespace LojaVirtual
 {
@@ -31,11 +33,27 @@ namespace LojaVirtual
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpContextAccessor();            
+            services.AddHttpContextAccessor();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<INewsletterRepository, NewsletterRepository>();
             services.AddScoped<IColaboradorRepository, ColaboradorRepository>();
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+
+            /*
+             * SMTP
+             */
+            services.AddScoped<SmtpClient>(options =>
+            {
+                SmtpClient smtp = new SmtpClient()
+                {
+                    Host = Configuration.GetValue<string>("Email:ServerSMTP"),
+                    Port = Configuration.GetValue<int>("Email:ServerPort"),
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(Configuration.GetValue<string>("Email:UserName"), Configuration.GetValue<string>("Email:Password")),
+                    EnableSsl = true
+                };
+                return smtp;
+            });
 
             services.Configure<CookiePolicyOptions>(options =>
             {
