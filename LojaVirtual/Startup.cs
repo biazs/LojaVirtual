@@ -18,6 +18,7 @@ using LojaVirtual.Libraries.Session;
 using LojaVirtual.Libraries.Login;
 using System.Net.Mail;
 using System.Net;
+using LojaVirtual.Libraries.Email;
 
 namespace LojaVirtual
 {
@@ -54,6 +55,8 @@ namespace LojaVirtual
                 };
                 return smtp;
             });
+
+            services.AddScoped<GerenciarEmail>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

@@ -1,4 +1,5 @@
 ﻿using LojaVirtual.Models;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +9,17 @@ using System.Threading.Tasks;
 
 namespace LojaVirtual.Libraries.Email
 {
-    public class ContatoEmail
+    public class GerenciarEmail
     {
-        public static void EnviarContatoPorEmail(Contato contato)
+        private SmtpClient _smtp;
+        private IConfiguration _configuration;
+        public GerenciarEmail(SmtpClient smtp, IConfiguration configuration)
         {
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 5222);
-            smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new NetworkCredential("email@gmail.com","");
-            smtp.EnableSsl = true;
+            _smtp = smtp;
+            _configuration = configuration;
+        }
+        public void EnviarContatoPorEmail(Contato contato)
+        {
 
             string corpoMsg = string.Format("<h2>Contato - Loja Virtual</h2" +
                 "<b>Nome</b> {0} <br />" +
@@ -26,13 +30,13 @@ namespace LojaVirtual.Libraries.Email
                 );
 
             MailMessage mensagem = new MailMessage();
-            mensagem.From = new MailAddress("email@gmail.com");
+            mensagem.From = new MailAddress(_configuration.GetValue<string>("Email: UserName"));
             mensagem.To.Add("email@gmail.com");
             mensagem.Subject = "Contato - LojaVirtual";
             mensagem.Body = corpoMsg;
             mensagem.IsBodyHtml = true;
 
-            smtp.Send(mensagem);
+            _smtp.Send(mensagem);
         }
     }
 }
