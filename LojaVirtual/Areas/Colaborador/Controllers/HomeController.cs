@@ -27,8 +27,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost]        
         public IActionResult Login([FromForm]Models.Colaborador colaborador)
         {
             Models.Colaborador colaboradorDB = _repositoryColaborador.Login(colaborador.Email, colaborador.Senha);
