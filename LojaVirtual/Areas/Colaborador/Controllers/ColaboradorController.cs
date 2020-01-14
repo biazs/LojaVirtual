@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using LojaVirtual.Libraries.Filtro;
 using LojaVirtual.Libraries.Lang;
 using LojaVirtual.Libraries.Texto;
+using LojaVirtual.Models.Constants;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,7 +14,7 @@ using X.PagedList;
 namespace LojaVirtual.Areas.Colaborador.Controllers
 {
     [Area("Colaborador")]
-    //[ColaboradorAutorizacao("G")]
+    //[ColaboradorAutorizacao(ColaboradorTipoConstant.Gerente)]
     public class ColaboradorController : Controller
     {
         private IColaboradorRepository _colaboradorRepository;
@@ -41,7 +42,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             if (ModelState.IsValid)
             {
                 //TODO - Gerar senha aelatoria, salvar nova, enviar e-mail
-                colaborador.Tipo = "C";
+                colaborador.Tipo = ColaboradorTipoConstant.Comum;
                 _colaboradorRepository.Cadastrar(colaborador);
                 TempData["MSG_S"] = Mensagem.MSG_S001;
 

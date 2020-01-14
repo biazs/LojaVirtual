@@ -32,11 +32,8 @@ namespace LojaVirtual.Models
         public string ConfirmacaoSenha { get; set; }
 
         /*
-         * TIPO
-         *   C=Comum
-         *   G=Gerente
-         */
-        //[Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
+         * TIPO = ColaboradorTipoConstant
+         */        
         public string Tipo { get; set; }
     }
 }
