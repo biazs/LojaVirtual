@@ -14,10 +14,11 @@ namespace LojaVirtual.Repositories
     {
         private IConfiguration _conf;
         private LojaVirtualContext _banco;
-        public ClienteRepository(LojaVirtualContext banco, IConfiguration configuration)
+
+        public ClienteRepository(LojaVirtualContext banco, IConfiguration conf)
         {
             _banco = banco;
-            _conf = configuration;
+            _conf = conf;
         }
         public void Cadastrar(Cliente cliente)
         {
@@ -50,10 +51,10 @@ namespace LojaVirtual.Repositories
 
         public IPagedList<Cliente> ObterTodosClientes(int? pagina)
         {
-            int RegistroPorPagina = _conf.GetValue<int>("RegistroPorPagina");
-            int numeroPagina = pagina ?? 1;
-            return _banco.Clientes.ToPagedList<Cliente>(numeroPagina, RegistroPorPagina);
+            int RegistrosPorPagina = _conf.GetValue<int>("RegistrosPorPagina");
 
+            int NumeroPagina = pagina ?? 1;
+            return _banco.Clientes.ToPagedList<Cliente>(NumeroPagina, RegistrosPorPagina);
         }
     }
 }
