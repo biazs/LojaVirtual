@@ -3,10 +3,24 @@
     ViewData["Title"] = "Index";
 }
 
-    <h1>Cliente</h1>
+<h1>Cliente</h1>
 <br />
 <br />
+<!--Formulário
+    Querystring-->
 
+<form method="get">
+    <div class="form-group">
+        <label for="pesquisa"></label>
+        <input type="text" name="pesquisa" id="pesquisa" class="form-control" placeholder="Digite o nome ou e-mail do cliente">        
+    </div>
+
+    <button type="submit" class="btn btn-primary">OK</button>
+</form>
+
+
+<br />
+<br />
 @if (TempData["MSG_S"] != null)
 {
     <p class="alert alert-success">@TempData["MSG_S"]</p>
