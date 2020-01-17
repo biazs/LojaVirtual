@@ -60,7 +60,8 @@ namespace LojaVirtual.Repositories
             {
                 bancoCliente = bancoCliente.Where(a => a.Nome.Contains(pesquisa.Trim()) || a.Email.Contains(pesquisa.Trim()));
             }
-            return _banco.Clientes.ToPagedList<Cliente>(NumeroPagina, RegistrosPorPagina);
+            
+            return bancoCliente.ToPagedList<Cliente>(NumeroPagina, RegistrosPorPagina);
         }
     }
 }
