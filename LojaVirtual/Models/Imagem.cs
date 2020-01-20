@@ -15,6 +15,6 @@ namespace LojaVirtual.Models
 
         //POO
         [ForeignKey("ProdutoId")]
-        public Produto Produto { get; set; }
+        public virtual Produto Produto { get; set; }
     }
 }
