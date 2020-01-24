@@ -4,3 +4,11 @@
     color : red;
     display : block;
 }
+
+.btn-imagem-excluir{
+    width: 100%;
+}
+
+.imagens-div{
+    text-align: center;
+}
