@@ -12,17 +12,26 @@ namespace LojaVirtual.Libraries.Arquivo
         public static string CadastrarImagemProduto(IFormFile file)
         {
             var NomeArquivo = Path.GetFileName(file.FileName);
-            var caminho = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/temp", NomeArquivo);
+            var Caminho = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/temp", NomeArquivo);
 
-            using (var stream = new FileStream(caminho, FileMode.Create))
+            using (var stream = new FileStream(Caminho, FileMode.Create))
             {
                 file.CopyTo(stream);
             }
             return Path.Combine("/uploads/temp", NomeArquivo);
         }
-        public static void ExcluirImagemProduto()
+        public static bool ExcluirImagemProduto(string caminho)
         {
-
+            string Caminho = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", caminho.TrimStart('/'));
+            if (File.Exists(Caminho))
+            {
+                File.Delete(Caminho);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
