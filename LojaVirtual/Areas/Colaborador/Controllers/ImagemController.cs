@@ -38,7 +38,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             {
                 return BadRequest();
             }
-            return View();
+            
         }
     }
 }
