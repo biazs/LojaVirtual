@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using LojaVirtual.Libraries.Filtro;
 using LojaVirtual.Libraries.Lang;
 using LojaVirtual.Libraries.Texto;
@@ -17,7 +14,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
     //[ColaboradorAutorizacao(ColaboradorTipoConstant.Gerente)]
     public class ColaboradorController : Controller
     {
-        private IColaboradorRepository _colaboradorRepository;
+        private readonly IColaboradorRepository _colaboradorRepository;
         public ColaboradorController(IColaboradorRepository colaboradorRepository)
         {
             _colaboradorRepository = colaboradorRepository;
@@ -26,7 +23,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         public IActionResult Index(int? pagina)
         {
             IPagedList<Models.Colaborador> colaborador = _colaboradorRepository.ObterTodosColaboradores(pagina);
-            
+
             return View(colaborador);
         }
 
@@ -57,7 +54,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
         {
             //TODO - Gerar senha aelatoria, salvar nova, enviar e-mail
             Models.Colaborador colaborador = _colaboradorRepository.ObterColaborador(id);
-            colaborador .Senha = KeyGenerator.GetUniqueKey(8);
+            colaborador.Senha = KeyGenerator.GetUniqueKey(8);
             _colaboradorRepository.Atualizar(colaborador);
             return View();
         }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using LojaVirtual.Libraries.Lang;
 using LojaVirtual.Models;
 using LojaVirtual.Repositories.Contracts;
@@ -13,8 +10,8 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
     [Area("Colaborador")]
     public class ProdutoController : Controller
     {
-        private IProdutoRepository _produtoRepository;
-        private ICategoriaRepository _categoriaRepository;
+        private readonly IProdutoRepository _produtoRepository;
+        private readonly ICategoriaRepository _categoriaRepository;
         public ProdutoController(IProdutoRepository produtoRepository, ICategoriaRepository categoriaRepository)
         {
             _produtoRepository = produtoRepository;
@@ -47,7 +44,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             ViewBag.Categorias = _categoriaRepository.ObterTodasCategorias().Select(a => new SelectListItem(a.Nome, a.Id.ToString()));
             return View();
 
-        }   
+        }
 
         [HttpGet]
         public IActionResult Atualizar(int id)
