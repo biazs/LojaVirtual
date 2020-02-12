@@ -7,14 +7,14 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
     [Area("Colaborador")]
     public class ImagemController : Controller
     {
-        public object Caminho { get; private set; }
+        //public object Caminho { get; private set; }
 
         [HttpPost]
         public IActionResult Armazenar(IFormFile file)
         {
-            var caminho = GerenciadorArquivo.CadastrarImagemProduto(file);
+            var Caminho = GerenciadorArquivo.CadastrarImagemProduto(file);
 
-            if (caminho.Length > 0)
+            if (Caminho.Length > 0)
             {
                 return Ok(new { caminho = Caminho });
             }

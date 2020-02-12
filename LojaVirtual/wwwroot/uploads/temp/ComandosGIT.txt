@@ -1,0 +1,66 @@
+
+//============== Git ===============================================================
+	git config --global user.name "Seu Nome"
+	git config --global user.name "Bia"
+
+	git config --global user.email "Seu Email"
+	git config --global user.email fabianazs@gmail.com
+
+	git init
+	git status
+	git log
+	git log --oneline
+
+	//Associar nosso repositorio local ao repositorio remoto, dando o apelido de "origin" a ele:
+	git remote add origin <URI do repositorio remoto>
+
+	//Associar o repositorio local a um outro repositorio remoto, porem mantendo o mesmo apelido:
+	git remote set-url origin <URI do repositorio remoto>
+
+	//Visualizar repositorio
+	git remote -v
+
+	//adicionar
+	git add .
+
+	//comitar
+	git commit -m "Comentario"
+	
+	//enviar o repositório local para o Github
+	git push -u origin master
+
+
+	//Descartar todas modificacoes, voltando ao estado do commit atual:
+	git clean -df
+	git checkout -- .
+
+	// Navegar entre commits, alterando os arquivos temporariamente:
+	git checkout <codigo do commit>
+
+	//Voltar para o ultimo commit:
+	git checkout <nome do branch>
+
+	//Desfazer alteracoes feitas em um arquivo
+	git checkout -- arquivo.txt
+
+	
+	//Copiando um repositório remoto para seu computador
+	git clone <URI do repositório remoto>
+	git clone https://...  (baixa o repositório)
+
+	//Comando para atualizar seu repositório local:
+	git pull origin master
+	git pull (merge)   (baixa as alterações do repositório)
+
+	//mostra diferencas entre commits
+	git diff <commit><commit> 
+
+	//reverte um commit
+	git revert <commit>
+
+
+	//Criar o arquivo .gitignore
+		//na linha de comando alterar o arquivo txt criado: 
+		ren git.txt .gitignore
+
+

@@ -30,7 +30,7 @@ function AjaxUploadImagemProduto() {
             contentType: false,
             processData: false,
             error: function () {
-                alert("erro no envio do arquivo");
+                alert("Erro no envio do arquivo");
             },
             success: function (data) {
                 alert("Arquivo enviado com sucesso. "+ data.caminho);
