@@ -20,6 +20,7 @@ function AjaxUploadImagemProduto() {
         var CampoHidden = $(this).parent().find("input[name=imagem]");
         var Imagem = $(this).parent().find(".img-upload");
         var BtnExcluir = $(this).parent().find(".btn-imagem-excluir");
+        var InputFile = $(this).parent().find(".input-file");
 
         $.ajax({
             type: "GET",
@@ -30,6 +31,8 @@ function AjaxUploadImagemProduto() {
             success: function (data) {
                 Imagem.attr("src", "/img/imagem-padrao.png");
                 BtnExcluir.addClass("btn-ocultar");
+                CampoHidden.val("");
+                InputFile.val("");
             }
         })
     });
