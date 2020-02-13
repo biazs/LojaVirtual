@@ -17,16 +17,19 @@ function AjaxUploadImagemProduto() {
     });
 
     $(".btn-imagem-excluir").click(function () {
-        var campoHidden = $(this).parent().find("input[name=imagem]");
+        var CampoHidden = $(this).parent().find("input[name=imagem]");
         var Imagem = $(this).parent().find(".img-upload");
+        var BtnExcluir = $(this).parent().find(".btn-imagem-excluir");
 
         $.ajax({
             type: "GET",
-            url: "/Colaborador/Imagem/Deletar?caminho=" + campoHidden.val(),
+            url: "/Colaborador/Imagem/Deletar?caminho=" + CampoHidden.val(),
             error: function () {
+
             },
             success: function (data) {
                 Imagem.attr("src", "/img/imagem-padrao.png");
+                BtnExcluir.addClass("btn-ocultar");
             }
         })
     });
@@ -37,8 +40,9 @@ function AjaxUploadImagemProduto() {
         var Formulario = new FormData();
         Formulario.append("file", Binario);
 
-        var campoHidden = $(this).parent().find("input[name=imagem]");
+        var CampoHidden = $(this).parent().find("input[name=imagem]");
         var Imagem = $(this).parent().find(".img-upload");
+        var BtnExcluir = $(this).parent().find(".btn-imagem-excluir");
         //TODO: Requisicao Ajax enviando Formulario
         $.ajax({
             type: "POST",
@@ -52,7 +56,8 @@ function AjaxUploadImagemProduto() {
             success: function (data) {
                 var caminho = data.caminho;
                 Imagem.attr("src", caminho);
-                campoHidden.val(caminho);
+                CampoHidden.val(caminho);
+                BtnExcluir.removeClass("btn-ocultar");
             }
         })
 

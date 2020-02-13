@@ -12,6 +12,11 @@
     border-top-right-radius: 0px;
 }
 
+.Imagens .btn-ocultar {
+    display: none;
+}
+
+
 .Imagens div {
     text-align: center;
 }
