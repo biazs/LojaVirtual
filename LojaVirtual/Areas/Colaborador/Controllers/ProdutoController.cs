@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using LojaVirtual.Libraries.Arquivo;
 using LojaVirtual.Libraries.Lang;
 using LojaVirtual.Models;
 using LojaVirtual.Repositories.Contracts;
@@ -37,6 +39,12 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
             if (ModelState.IsValid)
             {
                 _produtoRepository.Cadastrar(produto);
+
+
+                GerenciadorArquivo.MoverImagemProduto(new List<string>(Request.Form["imagem"]), produto.Id.ToString());
+                //TODO - caminho temporário -> mover a imagem para caminho definitivo
+                //TODO - salvar caminho definitivo no BD
+
                 TempData["MSG_S"] = Mensagem.MSG_S001;
 
                 return RedirectToAction(nameof(Index));

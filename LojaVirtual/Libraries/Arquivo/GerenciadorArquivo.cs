@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Microsoft.AspNetCore.Http;
 
 namespace LojaVirtual.Libraries.Arquivo
@@ -29,6 +31,25 @@ namespace LojaVirtual.Libraries.Arquivo
             {
                 return false;
             }
+        }
+
+        internal static void MoverImagemProduto(List<string> ListaCaminhoTemporario, string ProdutoId)
+        {
+            /*
+             * Criar a pasta do produto
+             */
+            var caminhoDefinitivoPastaProduto = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", ProdutoId);
+
+            if (!Directory.Exists(caminhoDefinitivoPastaProduto))
+            {
+                Directory.CreateDirectory(caminhoDefinitivoPastaProduto);
+            }
+
+            /*
+             * Mover a imagem da pasta temporaria para a definitiva
+             */
+
+            throw new NotImplementedException();
         }
     }
 }
