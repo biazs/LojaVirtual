@@ -41,7 +41,7 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
                 _produtoRepository.Cadastrar(produto);
 
 
-                GerenciadorArquivo.MoverImagemProduto(new List<string>(Request.Form["imagem"]), produto.Id.ToString());
+                List<string> ListaCaminhoDef = GerenciadorArquivo.MoverImagemProduto(new List<string>(Request.Form["imagem"]), produto.Id.ToString());
                 //TODO - caminho temporário -> mover a imagem para caminho definitivo
                 //TODO - salvar caminho definitivo no BD
 

@@ -33,7 +33,7 @@ namespace LojaVirtual.Libraries.Arquivo
             }
         }
 
-        internal static void MoverImagemProduto(List<string> ListaCaminhoTemporario, string ProdutoId)
+        internal static List<string> MoverImagemProduto(List<string> ListaCaminhoTemporario, string ProdutoId)
         {
             /*
              * Criar a pasta do produto
@@ -48,6 +48,30 @@ namespace LojaVirtual.Libraries.Arquivo
             /*
              * Mover a imagem da pasta temporaria para a definitiva
              */
+            List<string> ListaCaminhoDefinitivo = new List<string>();
+            foreach (var CaminhoTemp in ListaCaminhoTemporario)
+            {
+                if (string.IsNullOrEmpty(CaminhoTemp))
+                {
+                    var NomeArquivo = Path.GetFileName(CaminhoTemp);
+                    var CaminhoAbsolutoTemp = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", CaminhoTemp);
+                    var CaminhoAbsolutoDef = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", ProdutoId, NomeArquivo);
+
+                    if (File.Exists(CaminhoAbsolutoTemp))
+                    {
+                        File.Copy(CaminhoAbsolutoTemp, CaminhoAbsolutoDef);
+                        if (File.Exists(CaminhoAbsolutoDef))
+                        {
+                            File.Delete(CaminhoAbsolutoTemp);
+                        }
+                        ListaCaminhoDefinitivo.Add(Path.Combine("/uploads", ProdutoId, NomeArquivo).Replace("\\", "/"));
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
 
             throw new NotImplementedException();
         }
