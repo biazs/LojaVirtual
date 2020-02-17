@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 
@@ -73,7 +72,7 @@ namespace LojaVirtual.Libraries.Arquivo
                 }
             }
 
-            throw new NotImplementedException();
+            return ListaCaminhoDefinitivo;
         }
     }
 }

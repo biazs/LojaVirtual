@@ -14,10 +14,12 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
     {
         private readonly IProdutoRepository _produtoRepository;
         private readonly ICategoriaRepository _categoriaRepository;
-        public ProdutoController(IProdutoRepository produtoRepository, ICategoriaRepository categoriaRepository)
+        private readonly IImagemRepository _imagemRepository;
+        public ProdutoController(IProdutoRepository produtoRepository, ICategoriaRepository categoriaRepository, IImagemRepository imagemRepository)
         {
             _produtoRepository = produtoRepository;
             _categoriaRepository = categoriaRepository;
+            _imagemRepository = imagemRepository;
         }
 
         public IActionResult Index(int? pagina, string pesquisa)
@@ -42,8 +44,12 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
 
 
                 List<string> ListaCaminhoDef = GerenciadorArquivo.MoverImagemProduto(new List<string>(Request.Form["imagem"]), produto.Id.ToString());
-                //TODO - caminho temporário -> mover a imagem para caminho definitivo
                 //TODO - salvar caminho definitivo no BD
+                foreach (var CaminhoDef in ListaCaminhoDef)
+                {
+                    var Imagem = new Imagem() { Caminho = CaminhoDef, ProdutoId = produto.Id };
+                    _imagemRepository.Cadastrar(Imagem);
+                }
 
                 TempData["MSG_S"] = Mensagem.MSG_S001;
 
