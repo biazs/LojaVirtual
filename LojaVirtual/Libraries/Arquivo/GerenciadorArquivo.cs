@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using LojaVirtual.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace LojaVirtual.Libraries.Arquivo
@@ -32,12 +33,12 @@ namespace LojaVirtual.Libraries.Arquivo
             }
         }
 
-        internal static List<string> MoverImagemProduto(List<string> ListaCaminhoTemporario, string ProdutoId)
+        internal static List<Imagem> MoverImagemProduto(List<string> ListaCaminhoTemporario, int ProdutoId)
         {
             /*
              * Criar a pasta do produto
              */
-            var caminhoDefinitivoPastaProduto = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", ProdutoId);
+            var caminhoDefinitivoPastaProduto = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", ProdutoId.ToString());
 
             if (!Directory.Exists(caminhoDefinitivoPastaProduto))
             {
@@ -47,14 +48,14 @@ namespace LojaVirtual.Libraries.Arquivo
             /*
              * Mover a imagem da pasta temporaria para a definitiva
              */
-            List<string> ListaCaminhoDefinitivo = new List<string>();
+            List<Imagem> ListaImagensDef = new List<Imagem>();
             foreach (var CaminhoTemp in ListaCaminhoTemporario)
             {
                 if (string.IsNullOrEmpty(CaminhoTemp))
                 {
                     var NomeArquivo = Path.GetFileName(CaminhoTemp);
                     var CaminhoAbsolutoTemp = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", CaminhoTemp);
-                    var CaminhoAbsolutoDef = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", ProdutoId, NomeArquivo);
+                    var CaminhoAbsolutoDef = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", ProdutoId.ToString(), NomeArquivo);
 
                     if (File.Exists(CaminhoAbsolutoTemp))
                     {
@@ -63,7 +64,7 @@ namespace LojaVirtual.Libraries.Arquivo
                         {
                             File.Delete(CaminhoAbsolutoTemp);
                         }
-                        ListaCaminhoDefinitivo.Add(Path.Combine("/uploads", ProdutoId, NomeArquivo).Replace("\\", "/"));
+                        ListaImagensDef.Add(new Imagem() { Caminho = Path.Combine("/uploads", ProdutoId.ToString(), NomeArquivo).Replace("\\", "/"), ProdutoId = ProdutoId });
                     }
                     else
                     {
@@ -72,7 +73,7 @@ namespace LojaVirtual.Libraries.Arquivo
                 }
             }
 
-            return ListaCaminhoDefinitivo;
+            return ListaImagensDef;
         }
     }
 }

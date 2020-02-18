@@ -1,13 +1,9 @@
-﻿using LojaVirtual.Database;
+﻿using System.Collections.Generic;
+using System.Linq;
+using LojaVirtual.Database;
 using LojaVirtual.Models;
 using LojaVirtual.Repositories.Contracts;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using X.PagedList;
 
 namespace LojaVirtual.Repositories
 {
@@ -22,6 +18,14 @@ namespace LojaVirtual.Repositories
             _conf = configuration;
         }
 
+        public void CadastrarImagens(List<Imagem> ListaImagens, int ProdutoId)
+        {
+            foreach (var Imagem in ListaImagens)
+            {
+                Cadastrar(Imagem);
+            }
+
+        }
         public void Cadastrar(Imagem imagem)
         {
             _banco.Add(imagem);
@@ -37,7 +41,7 @@ namespace LojaVirtual.Repositories
 
         public void ExcluirImagensdoProduto(int ProdutoId)
         {
-            List<Imagem> imagens = _banco.Imagens.Where(a=>a.ProdutoId == ProdutoId).ToList();
+            List<Imagem> imagens = _banco.Imagens.Where(a => a.ProdutoId == ProdutoId).ToList();
 
             foreach (Imagem imagem in imagens)
             {
@@ -46,6 +50,6 @@ namespace LojaVirtual.Repositories
             _banco.SaveChanges();
         }
 
-            
+
     }
 }

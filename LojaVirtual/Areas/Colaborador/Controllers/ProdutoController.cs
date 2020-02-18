@@ -43,13 +43,10 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
                 _produtoRepository.Cadastrar(produto);
 
 
-                List<string> ListaCaminhoDef = GerenciadorArquivo.MoverImagemProduto(new List<string>(Request.Form["imagem"]), produto.Id.ToString());
-                //TODO - salvar caminho definitivo no BD
-                foreach (var CaminhoDef in ListaCaminhoDef)
-                {
-                    var Imagem = new Imagem() { Caminho = CaminhoDef, ProdutoId = produto.Id };
-                    _imagemRepository.Cadastrar(Imagem);
-                }
+                List<Imagem> ListaImagensDef = GerenciadorArquivo.MoverImagemProduto(new List<string>(Request.Form["imagem"]), produto.Id);
+
+                _imagemRepository.CadastrarImagens(ListaImagensDef, produto.Id);
+
 
                 TempData["MSG_S"] = Mensagem.MSG_S001;
 
