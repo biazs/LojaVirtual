@@ -51,7 +51,7 @@ namespace LojaVirtual.Libraries.Arquivo
             List<Imagem> ListaImagensDef = new List<Imagem>();
             foreach (var CaminhoTemp in ListaCaminhoTemporario)
             {
-                if (string.IsNullOrEmpty(CaminhoTemp))
+                if (!string.IsNullOrEmpty(CaminhoTemp))
                 {
                     var NomeArquivo = Path.GetFileName(CaminhoTemp);
                     var CaminhoAbsolutoTemp = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", CaminhoTemp);
