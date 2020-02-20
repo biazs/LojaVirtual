@@ -54,7 +54,7 @@ namespace LojaVirtual.Libraries.Arquivo
                 if (!string.IsNullOrEmpty(CaminhoTemp))
                 {
                     var NomeArquivo = Path.GetFileName(CaminhoTemp);
-                    var CaminhoAbsolutoTemp = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", CaminhoTemp);
+                    var CaminhoAbsolutoTemp = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/temp", NomeArquivo);
                     var CaminhoAbsolutoDef = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", ProdutoId.ToString(), NomeArquivo);
 
                     if (File.Exists(CaminhoAbsolutoTemp))
