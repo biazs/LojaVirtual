@@ -64,7 +64,15 @@ namespace LojaVirtual.Libraries.Arquivo
 
                         if (File.Exists(CaminhoAbsolutoTemp))
                         {
+                            if (File.Exists(CaminhoAbsolutoDef))
+                            {
+                                File.Delete(CaminhoAbsolutoDef);
+                            }
+
+                            //Copia arquivo da pasta temporária para pasta destino
                             File.Copy(CaminhoAbsolutoTemp, CaminhoAbsolutoDef);
+
+                            //Deleta arquivo da pasta temporária
                             if (File.Exists(CaminhoAbsolutoDef))
                             {
                                 File.Delete(CaminhoAbsolutoTemp);
@@ -75,6 +83,10 @@ namespace LojaVirtual.Libraries.Arquivo
                         {
                             return null;
                         }
+                    }
+                    else
+                    {
+                        ListaImagensDef.Add(new Imagem() { Caminho = Path.Combine("/uploads", ProdutoId.ToString(), NomeArquivo).Replace("\\", "/"), ProdutoId = ProdutoId });
                     }
                 }
             }
