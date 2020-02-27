@@ -76,7 +76,6 @@ namespace LojaVirtual.Libraries.Arquivo
                             return null;
                         }
                     }
-
                 }
             }
 
