@@ -27,6 +27,9 @@
     width: 100%;
     border: none;
 }
+.Imagens .thumb{
+    width: 64px;
+}
 
 .Imagens .container-img-thumbnail {
     width: 100%;
@@ -41,12 +44,19 @@
     margin-bottom: 0px;
 }
 
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
 .input-file{
     display: none;
 }
 
 .img-upload{
-    cursor: pointer;
+    cursor: pointer !important;
+    vertical-align:middle;        
 }
 
 .Imagens input[name=imagem]{
