@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Net;
+using System.Net.Mail;
 using LojaVirtual.Database;
+using LojaVirtual.Libraries.Email;
+using LojaVirtual.Libraries.Login;
+using LojaVirtual.Libraries.Middleware;
+using LojaVirtual.Libraries.Session;
+using LojaVirtual.Repositories;
+using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore.SqlServer;
-using Microsoft.EntityFrameworkCore;
-using LojaVirtual.Repositories;
-using LojaVirtual.Repositories.Contracts;
-using LojaVirtual.Libraries.Session;
-using LojaVirtual.Libraries.Login;
-using System.Net.Mail;
-using System.Net;
-using LojaVirtual.Libraries.Email;
-using LojaVirtual.Libraries.Middleware;
 
 namespace LojaVirtual
 {
@@ -70,7 +64,8 @@ namespace LojaVirtual
 
             //Session configuração
             services.AddMemoryCache();
-            services.AddSession(options => {
+            services.AddSession(options =>
+            {
 
             });
 
@@ -78,7 +73,10 @@ namespace LojaVirtual
             services.AddScoped<LoginCliente>();
             services.AddScoped<LoginColaborador>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options =>
+            {
+                options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(x => "O campo deve ser preenchido");
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             var connectionString = "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = LojaVirtual; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False";
             services.AddDbContext<LojaVirtualContext>(options => options.UseSqlServer(connectionString));
@@ -105,7 +103,7 @@ namespace LojaVirtual
             app.UseSession();
             app.UseMiddleware<ValidateAntiForgeryTokenMiddleware>();
 
-            
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -116,7 +114,7 @@ namespace LojaVirtual
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            
+
         }
     }
 }
