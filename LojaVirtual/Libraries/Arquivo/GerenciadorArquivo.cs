@@ -103,11 +103,11 @@ namespace LojaVirtual.Libraries.Arquivo
                 ProdutoId = Imagem.ProdutoId;
             }
 
-            var pastaProduto = Path.Combine(Directory.GetCurrentDirectory(), "wwwwroot/uploads", ProdutoId.ToString());
+            var PastaProduto = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", ProdutoId.ToString());
 
-            if (Directory.Exists(pastaProduto))
+            if (Directory.Exists(PastaProduto))
             {
-                Directory.Delete(pastaProduto);
+                Directory.Delete(PastaProduto);
             }
         }
     }
