@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LojaVirtual.Libraries.Email;
-using LojaVirtual.Models;
-using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using LojaVirtual.Database;
+using LojaVirtual.Libraries.Email;
+using LojaVirtual.Libraries.Filtro;
+using LojaVirtual.Libraries.Login;
+using LojaVirtual.Models;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Http;
-using LojaVirtual.Libraries.Login;
-using LojaVirtual.Libraries.Filtro;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LojaVirtual.Controllers
 {
@@ -50,6 +47,11 @@ namespace LojaVirtual.Controllers
             {
                 return View();
             }
+        }
+
+        public IActionResult Categoria()
+        {
+            return View();
         }
 
         public IActionResult Contato()
@@ -112,7 +114,7 @@ namespace LojaVirtual.Controllers
         {
             Cliente clienteDB = _repositoryCliente.Login(cliente.Email, cliente.Senha);
 
-            if(clienteDB != null)
+            if (clienteDB != null)
             {
                 _loginCliente.Login(clienteDB);
 
