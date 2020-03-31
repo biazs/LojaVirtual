@@ -6,6 +6,7 @@ using LojaVirtual.Libraries.Email;
 using LojaVirtual.Libraries.Filtro;
 using LojaVirtual.Libraries.Login;
 using LojaVirtual.Models;
+using LojaVirtual.Models.ViewModels;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,22 +19,26 @@ namespace LojaVirtual.Controllers
         private INewsletterRepository _repositoryNewsletter;
         private LoginCliente _loginCliente;
         private GerenciarEmail _gerenciarEmail;
-        public HomeController(IClienteRepository repositoryCliente, INewsletterRepository repositoryNewsletter, LoginCliente loginCliente, GerenciarEmail gerenciarEmail)
+        private IProdutoRepository _produtoRepository;
+
+        public HomeController(IClienteRepository repositoryCliente, INewsletterRepository repositoryNewsletter, LoginCliente loginCliente, GerenciarEmail gerenciarEmail, IProdutoRepository produtoRepository)
         {
             _repositoryCliente = repositoryCliente;
             _repositoryNewsletter = repositoryNewsletter;
             _loginCliente = loginCliente;
             _gerenciarEmail = gerenciarEmail;
+            _produtoRepository = produtoRepository;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int? pagina, string pesquisa)
         {
-            return View();
+            var viewModel = new IndexViewModel() { lista = _produtoRepository.ObterTodosProdutos(pagina, pesquisa) };
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Index([FromForm]NewsletterEmail newsletter)
+        public IActionResult Index(int? pagina, string pesquisa, [FromForm]NewsletterEmail newsletter)
         {
             if (ModelState.IsValid)
             {
@@ -45,7 +50,8 @@ namespace LojaVirtual.Controllers
             }
             else
             {
-                return View();
+                var viewModel = new IndexViewModel() { lista = _produtoRepository.ObterTodosProdutos(pagina, pesquisa) };
+                return View(viewModel);
             }
         }
 
