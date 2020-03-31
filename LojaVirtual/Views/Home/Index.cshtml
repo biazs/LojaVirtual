@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Index";
     var pesquisa = Context.Request.Query["pesquisa"];
-    var ordenacao = Context.Request.Query["ordenacao"];
+    var ordenacao = Context.Request.Query["ordenacao"].ToString();
 }
 
 
@@ -80,6 +80,7 @@
     <div class="container" id="code_prod_complex">
         <div class="row">
             <div class="offset-md-10 col-md-2">
+                <!-- Alfabetica, Menor Preço, Maior Preço -->
                 <select id="ordenacao" asp-for="@ordenacao" class="form-control" asp-items="Model.ordenacao"></select>
             </div>
 
