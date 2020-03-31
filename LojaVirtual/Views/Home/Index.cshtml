@@ -78,6 +78,13 @@
 {
     <div class="container" id="code_prod_complex">
         <div class="row">
+            <div class="offset-md-10 col-md-2">
+                <select id="ordenacao" asp-items="Model.ordenacao">
+                </select>
+            </div>
+
+        </div>
+        <div class="row">
             @foreach (var produto in Model.lista)
             {
                 <div class="col-md-3">
