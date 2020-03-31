@@ -1,6 +1,7 @@
 ﻿@model LojaVirtual.Models.ViewModels.IndexViewModel
 @{
     ViewData["Title"] = "Index";
+    var pesquisa = Context.Request.Query["pesquisa"];
 }
 
 
@@ -106,7 +107,7 @@
             }
 
         </div> <!-- row.// -->
-        @Html.PagedListPager((IPagedList)Model.lista, pagina => Url.Action("Index", new { pagina }))
+        @Html.PagedListPager((IPagedList)Model.lista, pagina => Url.Action("Index", new { pagina = pagina, pesquisa = pesquisa }))
     </div>
 }
 @{
