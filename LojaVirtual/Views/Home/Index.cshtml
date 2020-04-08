@@ -1,6 +1,8 @@
-﻿@model LojaVirtual.Models.NewsletterEmail
+﻿@model NewsletterEmail
+@{
+    ViewData["Title"] = "Index";
 
-
+}
 
 <main role="main">
 
@@ -63,25 +65,35 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
+
+
+
+
+    <!-- Lista de Produtos
+        ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <!-- TODO - Chamar Componente -->
+    @*<vc:produto-listagem></vc:produto-listagem>*@
+    @await Component.InvokeAsync("ProdutoListagem")
 </main>
 
-
-
-<!-- Lista de Produtos
-        ================================================== -->
-<!-- Wrap the rest of the page in another container to center all the content. -->
-<!-- TODO: chamar o componente -->
 @{
     /*
-     *
      * Razor - Motor Template do ASP.NET
-     * HtmlHelper - Interface que proporciona gerar HTML por meio do C#, isso ajuda na manipulacao de informacoes entre HTML
-     *
-     *  URL : Fragmento
-     *
-    Primeiro formulario @using (Html.BeginForm("index", "home", FormMethod.Post))
-    */
+     * Html Helper - Interface que proporciona gerar código HTML por meio do C#, isso ajuda na manipulação de informações entre HTML e Tecnologia ASP.NET
+     */
+
+    /*
+     * URL: #Fragmento
+     */
+
+    /*
+     * Primeiro formulário:
+     * @using (Html.BeginForm("index", "home", FormMethod.Post))
+     */
 }
+
+
 
 @using (Html.BeginForm(null, null, null, FormMethod.Post, true, new { @action = @Url.Action("index", "home") + "#formulario" }))
 {

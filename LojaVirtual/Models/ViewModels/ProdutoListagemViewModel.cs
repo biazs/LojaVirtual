@@ -6,15 +6,16 @@ namespace LojaVirtual.Models.ViewModels
 {
     public class ProdutoListagemViewModel
     {
+
         public IPagedList<Produto> lista { get; set; }
         public List<SelectListItem> ordenacao
         {
             get
             {
                 return new List<SelectListItem>() {
-                    new SelectListItem("Alfabetica", "A"),
+                    new SelectListItem("Alfabética", "A"),
                     new SelectListItem("Menor preço", "ME"),
-                    new SelectListItem("Maior preço", "MA"),
+                    new SelectListItem("Maior preço", "MA")
                 };
             }
             private set { }

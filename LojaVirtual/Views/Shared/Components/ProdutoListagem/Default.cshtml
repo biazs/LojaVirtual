@@ -1,6 +1,5 @@
 ﻿@model ProdutoListagemViewModel
 @{
-    ViewData["Title"] = "Index";
     var pesquisa = Context.Request.Query["pesquisa"];
     var ordenacao = Context.Request.Query["ordenacao"].ToString();
 }
@@ -12,7 +11,6 @@
                 <!-- Alfabetica, Menor Preço, Maior Preço -->
                 <select id="ordenacao" asp-for="@ordenacao" class="form-control" asp-items="Model.ordenacao"></select>
             </div>
-
         </div>
         <div class="row">
             @foreach (var produto in Model.lista)
@@ -20,7 +18,7 @@
                 <div class="col-md-3">
                     <figure class="card card-product">
                         <div class="img-wrap">
-                            @if (produto.Imagens != null && produto.Imagens.Count > 0)
+                            @if (produto.Imagens != null && produto.Imagens.Count() > 0)
                             {
                                 <img src="@produto.Imagens.ElementAt(0).Caminho" />
                             }
@@ -28,10 +26,10 @@
                             {
                                 <img src="~/img/imagem-produto.png" />
                             }
+
                         </div>
                         <figcaption class="info-wrap">
                             <h4 class="title">@produto.Nome</h4>
-
                         </figcaption>
                         <div class="bottom-wrap">
                             <a href="" class="btn btn-sm btn-primary float-right">Adicionar Carrinho</a>
@@ -42,7 +40,6 @@
                     </figure>
                 </div> <!-- col // -->
             }
-
         </div> <!-- row.// -->
         @Html.PagedListPager((IPagedList)Model.lista, pagina => Url.Action("Index", new { pagina = pagina, pesquisa = pesquisa, ordenacao = ordenacao }))
     </div>

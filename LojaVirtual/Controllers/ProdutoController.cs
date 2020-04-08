@@ -1,14 +1,20 @@
 ﻿using LojaVirtual.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LojaVirtual.Controllers
 {
     public class ProdutoController : Controller
     {
+
+        [HttpGet]
+        [Route("Produto/Categoria/{slug}")]
+        public ActionResult ListagemCategoria(string slug)
+        {
+            return View();
+
+        }
+
+
         /*
          * ActionResult
          * IActionResult
@@ -18,7 +24,7 @@ namespace LojaVirtual.Controllers
             Produto produto = GetProduto();
 
             return View(produto);
-           // return new ContentResult() { Content = "<h3>Produto -> Visualizar</h3>", ContentType="text/html" };
+            // return new ContentResult() { Content = "<h3>Produto -> Visualizar</h3>", ContentType="text/html" };
         }
 
         private Produto GetProduto()

@@ -6,7 +6,6 @@ using LojaVirtual.Libraries.Email;
 using LojaVirtual.Libraries.Filtro;
 using LojaVirtual.Libraries.Login;
 using LojaVirtual.Models;
-using LojaVirtual.Models.ViewModels;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +19,7 @@ namespace LojaVirtual.Controllers
         private LoginCliente _loginCliente;
         private GerenciarEmail _gerenciarEmail;
         private IProdutoRepository _produtoRepository;
-
-        public HomeController(IClienteRepository repositoryCliente, INewsletterRepository repositoryNewsletter, LoginCliente loginCliente, GerenciarEmail gerenciarEmail, IProdutoRepository produtoRepository)
+        public HomeController(IProdutoRepository produtoRepository, IClienteRepository repositoryCliente, INewsletterRepository repositoryNewsletter, LoginCliente loginCliente, GerenciarEmail gerenciarEmail)
         {
             _repositoryCliente = repositoryCliente;
             _repositoryNewsletter = repositoryNewsletter;
@@ -31,14 +29,13 @@ namespace LojaVirtual.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(int? pagina, string pesquisa, string ordenacao)
+        public IActionResult Index()
         {
-            var viewModel = new IndexViewModel() { lista = _produtoRepository.ObterTodosProdutos(pagina, pesquisa, ordenacao) };
-            return View(viewModel);
+            return View();
         }
 
         [HttpPost]
-        public IActionResult Index(int? pagina, string pesquisa, string ordenacao, [FromForm]NewsletterEmail newsletter)
+        public IActionResult Index([FromForm]NewsletterEmail newsletter)
         {
             if (ModelState.IsValid)
             {
@@ -50,11 +47,9 @@ namespace LojaVirtual.Controllers
             }
             else
             {
-                var viewModel = new IndexViewModel() { lista = _produtoRepository.ObterTodosProdutos(pagina, pesquisa, ordenacao) };
-                return View(viewModel);
+                return View();
             }
         }
-
         public IActionResult Categoria()
         {
             return View();
@@ -128,7 +123,7 @@ namespace LojaVirtual.Controllers
             }
             else
             {
-                ViewData["MSG_E"] = "Usuário não encontrado, verifique o e-mail e senha informado.";
+                ViewData["MSG_E"] = "Usuário não encontrado, verifique o e-mail e senha digitado!";
                 return View();
             }
         }
@@ -137,7 +132,7 @@ namespace LojaVirtual.Controllers
         [ClienteAutorizacao]
         public IActionResult Painel()
         {
-            return new ContentResult() { Content = "Este é o painel do Cliente! " };
+            return new ContentResult() { Content = "Este é o Painel do Cliente!" };
         }
 
         [HttpGet]

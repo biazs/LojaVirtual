@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using LojaVirtual.Models.ViewModels;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,12 +12,12 @@ namespace LojaVirtual.Libraries.Component
         {
             _produtoRepository = produtoRepository;
         }
-
         public async Task<IViewComponentResult> InvokeAsync()
         {
             int? pagina = 1;
             string pesquisa = "";
             string ordenacao = "A";
+
             if (HttpContext.Request.Query.ContainsKey("pagina"))
             {
                 pagina = int.Parse(HttpContext.Request.Query["pagina"]);
@@ -27,10 +28,11 @@ namespace LojaVirtual.Libraries.Component
             }
             if (HttpContext.Request.Query.ContainsKey("ordenacao"))
             {
-                ordenacao = HttpContext.Request.Query["ordenacao"].ToString();
+                ordenacao = HttpContext.Request.Query["ordenacao"];
             }
-            var lista = _produtoRepository.ObterTodosProdutos(pagina, pesquisa, ordenacao);
-            return View(lista);
+            var viewModel = new ProdutoListagemViewModel() { lista = _produtoRepository.ObterTodosProdutos(pagina, pesquisa, ordenacao) };
+
+            return View(viewModel);
         }
     }
 }
