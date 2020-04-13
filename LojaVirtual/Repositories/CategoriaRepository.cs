@@ -1,12 +1,10 @@
-﻿using LojaVirtual.Database;
+﻿using System.Collections.Generic;
+using System.Linq;
+using LojaVirtual.Database;
 using LojaVirtual.Models;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using X.PagedList;
 
 namespace LojaVirtual.Repositories
@@ -44,6 +42,11 @@ namespace LojaVirtual.Repositories
         public Categoria ObterCategoria(int? Id)
         {
             return _banco.Categorias.Find(Id);
+        }
+
+        public Categoria ObterCategoria(string Slug)
+        {
+            return _banco.Categorias.Where(a => a.Slug == Slug).FirstOrDefault();
         }
 
         public IPagedList<Categoria> ObterTodasCategorias(int? pagina)

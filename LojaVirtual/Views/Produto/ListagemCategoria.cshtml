@@ -6,3 +6,9 @@
 
 <h1>Listagem Categoria - @slug</h1>
 
+<u>
+    @foreach (Categoria categoria in ViewBag.Categorias)
+    {
+        <li>@categoria.Nome</li>
+    }
+</u>
