@@ -21,32 +21,12 @@ namespace LojaVirtual.Controllers
         public ActionResult ListagemCategoria(string slug)
         {
             Categoria CategoriaPrincipal = _categoriaRepository.ObterCategoria(slug);
-            List<Categoria> lista = GetCategorias(_categoriaRepository.ObterTodasCategorias().ToList(), CategoriaPrincipal);
+            List<Categoria> lista = _categoriaRepository.ObterCategoriasRecursivas(CategoriaPrincipal).ToList();
             ViewBag.Categorias = lista;
             return View();
 
         }
-        private List<Categoria> lista = new List<Categoria>();
-        private List<Categoria> GetCategorias(List<Categoria> categorias, Categoria CategoriaPrincipal)
-        {
-            if (!lista.Exists(a => a.Id == CategoriaPrincipal.Id))
-            {
-                lista.Add(CategoriaPrincipal);
-            }
 
-            var ListaCategoriaFilho = categorias.Where(a => a.CategoriaPaiId == CategoriaPrincipal.Id);
-            if (ListaCategoriaFilho.Count() > 0)
-            {
-                lista.AddRange(ListaCategoriaFilho.ToList());
-                foreach (var categoria in ListaCategoriaFilho)
-                {
-                    GetCategorias(categorias, categoria);
-                }
-            }
-
-            return lista;
-
-        }
 
         /*
          * ActionResult
