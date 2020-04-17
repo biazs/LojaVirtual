@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using LojaVirtual.Models;
+﻿using LojaVirtual.Models;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,13 +16,9 @@ namespace LojaVirtual.Controllers
 
         [HttpGet]
         [Route("Produto/Categoria/{slug}")]
-        public ActionResult ListagemCategoria(string slug)
+        public ActionResult ListagemCategoria()
         {
-            Categoria CategoriaPrincipal = _categoriaRepository.ObterCategoria(slug);
-            List<Categoria> lista = _categoriaRepository.ObterCategoriasRecursivas(CategoriaPrincipal).ToList();
-            ViewBag.Categorias = lista;
             return View();
-
         }
 
 
