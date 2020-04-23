@@ -1,14 +1,7 @@
-﻿
-@{
-    ViewData["Title"] = "ListagemCategoria";
-    var slug = ViewContext.RouteData.Values["slug"];
+﻿@{
+    ViewData["Title"] = "Categoria";
 }
 
-<h1>Listagem Categoria - @slug</h1>
+<br style="clear: both" />
 
-<u>
-    @foreach (Categoria categoria in ViewBag.Categorias)
-    {
-        <li>@categoria.Id - @categoria.Nome</li>
-    }
-</u>
+@await Component.InvokeAsync("ProdutoListagem")
