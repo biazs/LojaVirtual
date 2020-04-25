@@ -1,5 +1,4 @@
-﻿using LojaVirtual.Models;
-using LojaVirtual.Repositories.Contracts;
+﻿using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LojaVirtual.Controllers
@@ -21,29 +20,14 @@ namespace LojaVirtual.Controllers
             return View(_categoriaRepository.ObterCategoria(slug));
         }
 
-
         /*
          * ActionResult
          * IActionResult
          */
-        public ActionResult Visualizar()
+        [HttpGet]
+        public ActionResult Visualizar(int id)
         {
-            Produto produto = GetProduto();
-
-            return View(produto);
-            // return new ContentResult() { Content = "<h3>Produto -> Visualizar</h3>", ContentType="text/html" };
+            return View(_produtoRepository.ObterProduto(id));
         }
-
-        private Produto GetProduto()
-        {
-            return new Produto()
-            {
-                Id = 1,
-                Nome = "Xbox One X",
-                Descricao = "Jogue em 4k",
-                Valor = 2000.00M
-            };
-        }
-
     }
 }
