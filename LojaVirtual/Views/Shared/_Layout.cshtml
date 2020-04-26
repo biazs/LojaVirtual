@@ -16,10 +16,11 @@
           crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/StyleSheet.css" />
     <link rel="stylesheet" href="~/resources/lib/pagedList/PagedList.css" />
+    <link rel="stylesheet" href="~/resources/lib/bootstrap-ecommerce-uikit/ui-ecommerce/plugins/fancybox/fancybox.min.css" />
 </head>
 <body>
     <header>
-        @await Component.InvokeAsync("Menu")        
+        @await Component.InvokeAsync("Menu")
     </header>
     <div>
         @RenderBody()
@@ -40,6 +41,7 @@
     <script src="/resources/lib/jquery3.3.1/jquery-3.3.1.min.js"></script>
     <script src="/resources/lib/popper1.14.6/popper.min.js"></script>
     <script src="/resources/lib/bootstrap-4.2.1-dist/js/bootstrap.min.js"></script>
+    <script src="~/resources/lib/bootstrap-ecommerce-uikit/ui-ecommerce/plugins/fancybox/fancybox.min.js"></script>
     <script src="~/js/ActionVisitante.js"></script>
 
 </body>
