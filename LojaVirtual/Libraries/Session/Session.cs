@@ -14,7 +14,6 @@ namespace LojaVirtual.Libraries.Session
         {
             _context.HttpContext.Session.SetString(key, valor);
         }
-
         public void Atualizar(string key, string valor)
         {
             if (Existe(key))
@@ -22,12 +21,10 @@ namespace LojaVirtual.Libraries.Session
 
             _context.HttpContext.Session.SetString(key, valor);
         }
-
         public void Remover(string key)
         {
             _context.HttpContext.Session.Remove(key);
         }
-
         public string Consultar(string key)
         {
             return _context.HttpContext.Session.GetString(key);
@@ -43,7 +40,6 @@ namespace LojaVirtual.Libraries.Session
                 return true;
             }
         }
-
         public void RemoverTodos()
         {
             _context.HttpContext.Session.Clear();
