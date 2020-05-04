@@ -1,8 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LojaVirtual.Libraries.Session
 {
@@ -14,7 +10,6 @@ namespace LojaVirtual.Libraries.Session
             _context = context;
         }
 
-
         public void Cadastrar(string key, string valor)
         {
             _context.HttpContext.Session.SetString(key, valor);
@@ -22,7 +17,7 @@ namespace LojaVirtual.Libraries.Session
 
         public void Atualizar(string key, string valor)
         {
-            if(Existe(key))
+            if (Existe(key))
                 _context.HttpContext.Session.Remove(key);
 
             _context.HttpContext.Session.SetString(key, valor);
@@ -39,7 +34,7 @@ namespace LojaVirtual.Libraries.Session
         }
         public bool Existe(string key)
         {
-            if(_context.HttpContext.Session.GetString(key) == null)
+            if (_context.HttpContext.Session.GetString(key) == null)
             {
                 return false;
             }

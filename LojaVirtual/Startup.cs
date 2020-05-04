@@ -70,6 +70,7 @@ namespace LojaVirtual
             });
 
             services.AddScoped<Session>();
+            services.AddScoped<LojaVirtual.Libraries.Cookie.Cookie>();
             services.AddScoped<LoginCliente>();
             services.AddScoped<LoginColaborador>();
 
