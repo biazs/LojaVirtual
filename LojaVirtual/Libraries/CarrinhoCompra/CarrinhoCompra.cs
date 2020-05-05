@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace LojaVirtual.Libraries.CarrinhoCompra
@@ -17,27 +18,53 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
 
         public void Cadastrar(Item item)
         {
+            List<Item> Lista;
             if (_cookie.Existe(key))
             {
+                Lista = Consultar();
+                var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == item.Id);
+                if (ItemLocalizado == null)
+                {
+                    Lista.Add(item);
+                }
+                else
+                {
+                    ItemLocalizado.Quantidade = ItemLocalizado.Quantidade + 1;
+                }
 
             }
             else
             {
+                Lista = new List<Item>();
+                Lista.Add(item);
+            }
 
+            Salvar(Lista);
+        }
+
+        public void Atualizar(Item item)
+        {
+            var Lista = Consultar();
+            var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == item.Id);
+
+            if (ItemLocalizado != null)
+            {
+                ItemLocalizado.Quantidade = item.Quantidade;
+                Salvar(Lista);
             }
         }
 
-        //public void Atualizar(string key, string Valor)
-        //{
-        //    if (Existe(key))
-        //        Remover(key);
-        //    Cadastrar(key, Valor);
-        //}
+        public void Remover(Item item)
+        {
+            var Lista = Consultar();
+            var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == item.Id);
 
-        //public void Remover(string key)
-        //{
-        //    _context.HttpContext.Response.Cookies.Delete(key);
-        //}
+            if (ItemLocalizado != null)
+            {
+                Lista.Remove(ItemLocalizado);
+                Salvar(Lista);
+            }
+        }
 
         public List<Item> Consultar()
         {
@@ -51,30 +78,27 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
                 return new List<Item>();
             }
         }
-        //public bool Existe(string key)
-        //{
-        //    if (_context.HttpContext.Request.Cookies[key] == null)
-        //    {
-        //        return false;
-        //    }
-        //    else
-        //    {
-        //        return true;
-        //    }
-        //}
 
-        //public void RemoverTodos()
-        //{
-        //    var ListaCookie = _context.HttpContext.Request.Cookies.ToList();
-        //    foreach (var cookie in ListaCookie)
-        //    {
-        //        Remover(cookie.Key);
-        //    }
-        //}
+        public void Salvar(List<Item> Lista)
+        {
+            string Valor = JsonConvert.SerializeObject(Lista);
+            _cookie.Cadastrar(key, Valor);
+        }
 
+        public bool Existe(string key)
+        {
+            if (_cookie.Existe(key))
+            {
+                return false;
+            }
 
+            return true;
+        }
 
-
+        public void RemoverTodos()
+        {
+            _cookie.Remover(key);
+        }
 
     }
 
