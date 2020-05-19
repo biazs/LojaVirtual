@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using LojaVirtual.Models.ProdutoAgregador;
 using Newtonsoft.Json;
 
 namespace LojaVirtual.Libraries.CarrinhoCompra
@@ -16,9 +17,9 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
 
         /* Adicionar item, remover item, alterar quantidade*/
 
-        public void Cadastrar(Item item)
+        public void Cadastrar(ItProdutoItemem item)
         {
-            List<Item> Lista;
+            List<ProdutoItem> Lista;
             if (_cookie.Existe(key))
             {
                 Lista = Consultar();
@@ -35,14 +36,14 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
             }
             else
             {
-                Lista = new List<Item>();
+                Lista = new List<ProdutoItem>();
                 Lista.Add(item);
             }
 
             Salvar(Lista);
         }
 
-        public void Atualizar(Item item)
+        public void Atualizar(ProdutoItem item)
         {
             var Lista = Consultar();
             var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == item.Id);
@@ -54,7 +55,7 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
             }
         }
 
-        public void Remover(Item item)
+        public void Remover(ProdutoItem item)
         {
             var Lista = Consultar();
             var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == item.Id);
@@ -66,20 +67,20 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
             }
         }
 
-        public List<Item> Consultar()
+        public List<ProdutoItem> Consultar()
         {
             if (_cookie.Existe(key))
             {
                 string valor = _cookie.Consultar(key);
-                return JsonConvert.DeserializeObject<List<Item>>(valor);
+                return JsonConvert.DeserializeObject<List<ProdutoItem>>(valor);
             }
             else
             {
-                return new List<Item>();
+                return new List<ProdutoItem>();
             }
         }
 
-        public void Salvar(List<Item> Lista)
+        public void Salvar(List<ProdutoItem> Lista)
         {
             string Valor = JsonConvert.SerializeObject(Lista);
             _cookie.Cadastrar(key, Valor);
@@ -102,10 +103,5 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
 
     }
 
-    public class Item
-    {
-        public int? Id { get; set; }
-        public int? Quantidade { get; set; }
-    }
 }
 
