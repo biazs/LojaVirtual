@@ -1,5 +1,5 @@
 ﻿using LojaVirtual.Libraries.CarrinhoCompra;
-using LojaVirtual.Models;
+using LojaVirtual.Models.ProdutoAgregador;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +29,7 @@ namespace LojaVirtual.Controllers
             }
             else
             {
-                var item = new Item() { Id = id, Quantidade = 1 };
+                var item = new ProdutoItem() { Id = id, Quantidade = 1 };
                 _carrinhoCompra.Cadastrar(item);
 
                 return RedirectToAction(nameof(Index));
@@ -38,14 +38,14 @@ namespace LojaVirtual.Controllers
         }
         public IActionResult AlterarQuantidade(int id, int quantidade)
         {
-            var item = new Item() { Id = id, Quantidade = quantidade };
+            var item = new ProdutoItem() { Id = id, Quantidade = quantidade };
             _carrinhoCompra.Atualizar(item);
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult RemoverItem(int id)
         {
-            _carrinhoCompra.Remover(new Item() { Id = id });
+            _carrinhoCompra.Remover(new ProdutoItem() { Id = id });
 
             return RedirectToAction(nameof(Index));
         }

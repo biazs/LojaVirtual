@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using LojaVirtual.Models.ProdutoAgregador;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using X.PagedList;
 

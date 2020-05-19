@@ -17,7 +17,7 @@ namespace LojaVirtual.Libraries.CarrinhoCompra
 
         /* Adicionar item, remover item, alterar quantidade*/
 
-        public void Cadastrar(ItProdutoItemem item)
+        public void Cadastrar(ProdutoItem item)
         {
             List<ProdutoItem> Lista;
             if (_cookie.Existe(key))
