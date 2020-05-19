@@ -29,7 +29,7 @@ namespace LojaVirtual.Controllers
             }
             else
             {
-                var item = new ProdutoItem() { Id = id, Quantidade = 1 };
+                var item = new ProdutoItem() { Id = id, QuantidadeProdutoCarrinho = 1 };
                 _carrinhoCompra.Cadastrar(item);
 
                 return RedirectToAction(nameof(Index));
@@ -38,7 +38,7 @@ namespace LojaVirtual.Controllers
         }
         public IActionResult AlterarQuantidade(int id, int quantidade)
         {
-            var item = new ProdutoItem() { Id = id, Quantidade = quantidade };
+            var item = new ProdutoItem() { Id = id, QuantidadeProdutoCarrinho = quantidade };
             _carrinhoCompra.Atualizar(item);
             return RedirectToAction(nameof(Index));
         }
