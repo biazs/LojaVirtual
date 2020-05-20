@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<LojaVirtual.Models.ProdutoAgregador.ProdutoItem>
+@{
     ViewData["Title"] = "Index";
 }
 
@@ -18,13 +19,14 @@
                             <th scope="col" width="200" class="text-right">Ação</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    @foreach (var item in Model)
+                    {
                         <tr>
                             <td>
                                 <figure class="media">
                                     <div class="img-wrap"><img src="images/items/1.jpg" class="img-thumbnail img-sm"></div>
                                     <figcaption class="media-body">
-                                        <h6 class="title text-truncate">Product name goes here </h6>
+                                        <h6 class="title text-truncate">@item.Nome</h6>
                                         <dl class="dlist-inline small">
                                             <dt>Size: </dt>
                                             <dd>XXL</dd>
@@ -46,14 +48,16 @@
                             </td>
                             <td>
                                 <div class="price-wrap">
-                                    <var class="price">R$ 40,00</var>
-                                    <small class="text-muted">(R$ 10,00 cada)</small>
+                                    <var class="price">@((item.Valor * item.QuantidadeProdutoCarrinho).ToString())</var>
+                                    <small class="text-muted">(@item.Valor.ToString() cada)</small>
                                 </div> <!-- price-wrap .// -->
                             </td>
                             <td class="text-right">
                                 <a href="" class="btn btn-outline-danger"> × Remove</a>
                             </td>
                         </tr>
+                    }
+                    <tbody>
                         <tr>
                             <td>
                                 <figure class="media">

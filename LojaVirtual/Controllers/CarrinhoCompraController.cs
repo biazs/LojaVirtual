@@ -1,4 +1,5 @@
-﻿using LojaVirtual.Libraries.CarrinhoCompra;
+﻿using System.Collections.Generic;
+using LojaVirtual.Libraries.CarrinhoCompra;
 using LojaVirtual.Models.ProdutoAgregador;
 using LojaVirtual.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,23 @@ namespace LojaVirtual.Controllers
 
         public IActionResult Index()
         {
+            List<ProdutoItem> produtoItemNoCarrinho = _carrinhoCompra.Consultar();
+            List<ProdutoItem> produtoItemCompleto = new List<ProdutoItem>();
+
+            foreach (var item in produtoItemNoCarrinho)
+            {
+                //TODO - AutoMapper
+                Produto produto = _produtoRepository.ObterProduto(item.Id);
+                ProdutoItem produtoItem = new ProdutoItem();
+                produtoItem.Id = produto.Id;
+                produtoItem.Nome = produto.Nome;
+                produtoItem.Imagens = produto.Imagens;
+                produtoItem.Valor = produto.Valor;
+                produtoItem.QuantidadeProdutoCarrinho = item.QuantidadeProdutoCarrinho;
+
+                produtoItemCompleto.Add(produtoItem);
+            }
+
             return View();
         }
 
