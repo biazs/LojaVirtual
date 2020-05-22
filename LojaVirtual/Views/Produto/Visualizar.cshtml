@@ -1,7 +1,6 @@
 ﻿@model LojaVirtual.Models.ProdutoAgregador.Produto
 
 <br style="clear: both" />
-
 <div class="container">
 
     <section id="product_detail">
@@ -20,13 +19,12 @@
                                     {
                                         <a href="~/img/imagem-produto.png" data-fancybox><img src="~/img/imagem-produto.png"></a>
                                     }
-
                                 </div>
                             </div> <!-- slider-product.// -->
                             <div class="img-small-wrap">
                                 @if (Model.Imagens != null && Model.Imagens.Count > 0)
                                 {
-                                    @foreach (Imagem imagem in Model.Imagens)
+                                    foreach (Imagem imagem in Model.Imagens)
                                     {
                                         <div class="item-gallery"> <img src="@imagem.Caminho"></div>
                                     }
@@ -37,10 +35,9 @@
                     <aside class="col-sm-7">
                         <article class="p-5">
                             <h3 class="title mb-3">@Model.Nome</h3>
-
                             <div class="mb-3">
                                 <var class="price h3 text-warning">
-                                    <span class="currency">R$</span><span class="num">@Model.Valor.ToString("C")</span>
+                                    <span class="num">@Model.Valor.ToString("C")</span>
                                 </var>
                                 <span>/unid</span>
                             </div> <!-- price-detail-wrap .// -->
@@ -55,41 +52,21 @@
                             <dl class="row">
                                 <dt class="col-sm-3">Peso(kg)</dt>
                                 <dd class="col-sm-9">@Model.Peso</dd>
-
                                 <dt class="col-sm-3">Largura</dt>
                                 <dd class="col-sm-9">@Model.Largura</dd>
-
                                 <dt class="col-sm-3">Altura</dt>
                                 <dd class="col-sm-9">@Model.Altura</dd>
-
                                 <dt class="col-sm-3">Comprimento</dt>
                                 <dd class="col-sm-9">@Model.Comprimento</dd>
-
                                 <dt class="col-sm-3">Quantidade em estoque</dt>
                                 <dd class="col-sm-9">@Model.Quantidade</dd>
                             </dl>
                             <hr>
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <dl class="dlist-inline">
-                                        <dt>Quantity: </dt>
-                                        <dd>
-                                            <select class="form-control form-control-sm" style="width:70px;">
-                                                <option> 1 </option>
-                                                <option> 2 </option>
-                                                <option> 3 </option>
-                                            </select>
-                                        </dd>
-                                    </dl>  <!-- item-property .// -->
-                                </div> <!-- col.// -->
-                            </div> <!-- row.// -->
-                            <hr>
-                            <a href="#" class="btn  btn-outline-primary"> <i class="fas fa-shopping-cart"></i> Adicionar ao carrinho </a>
+                            <a asp-controller="CarrinhoCompra" asp-action="AdicionarItem" asp-route-id="@Model.Id" class="btn  btn-outline-primary"> <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho </a>
                         </article> <!-- card-body.// -->
                     </aside> <!-- col.// -->
                 </div> <!-- row.// -->
             </div> <!-- card.// -->
         </div> <!-- code-wrap.// -->
     </section>
-
 </div>

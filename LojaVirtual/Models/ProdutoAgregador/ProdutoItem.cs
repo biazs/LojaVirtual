@@ -2,8 +2,9 @@
 {
     public class ProdutoItem : Produto
     {
-
-        public int? QuantidadeProdutoCarrinho { get; set; }
-
+        /*
+         * Armazena a quantidade de produtos que o usuário pretende comprar deste item.
+         */
+        public int QuantidadeProdutoCarrinho { get; set; }
     }
 }

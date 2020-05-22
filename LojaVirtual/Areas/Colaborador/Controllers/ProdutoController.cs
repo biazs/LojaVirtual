@@ -110,5 +110,6 @@ namespace LojaVirtual.Areas.Colaborador.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
     }
 }

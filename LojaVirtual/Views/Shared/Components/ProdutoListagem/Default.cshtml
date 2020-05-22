@@ -34,7 +34,7 @@
                                 <h4 class="title">@produto.Nome</h4>
                             </figcaption>
                             <div class="bottom-wrap">
-                                <a href="" class="btn btn-sm btn-primary float-right">Adicionar Carrinho</a>
+                                <a asp-controller="CarrinhoCompra" asp-action="AdicionarItem" asp-route-id="@produto.Id" class="btn btn-sm btn-primary float-right">Adicionar ao Carrinho</a>
                                 <div class="price-wrap h5">
                                     <span class="price-new">@produto.Valor.ToString("C")</span>
                                 </div> <!-- price-wrap.// -->
@@ -51,11 +51,8 @@ else
 {
     <div class="container">
         <br />
-        <div class="row">
-            <div class="alert alert-info">
-                <strong>Ops! </strong>Não temos produtos para esta categoria.
-            </div>
+        <div class="alert alert-info">
+            <strong>Opsss!</strong> Não temos produtos para esta categoria!
         </div>
     </div>
 }
-

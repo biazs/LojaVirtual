@@ -38,9 +38,11 @@ namespace LojaVirtual.Controllers
             return View();
         }
 
+        //Item ID = ID Produto
         public IActionResult AdicionarItem(int id)
         {
             Produto produto = _produtoRepository.ObterProduto(id);
+
             if (produto == null)
             {
                 return View("NaoExisteItem");
@@ -52,8 +54,8 @@ namespace LojaVirtual.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-
         }
+
         public IActionResult AlterarQuantidade(int id, int quantidade)
         {
             var item = new ProdutoItem() { Id = id, QuantidadeProdutoCarrinho = quantidade };

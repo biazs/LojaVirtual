@@ -1,53 +1,68 @@
 ﻿using System;
 using System.Linq;
+using LojaVirtual.Libraries.Seguranca;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace LojaVirtual.Libraries.Cookie
 {
     public class Cookie
     {
         private IHttpContextAccessor _context;
-        public Cookie(IHttpContextAccessor context)
+        private IConfiguration _configuration;
+
+        public Cookie(IHttpContextAccessor context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
-        public void Cadastrar(string key, string Valor)
+        /*
+         * CRUD - Cadastrar/Atualizar/Consultar/Remover - RemoverTodos/Exist
+         */
+        public void Cadastrar(string Key, string Valor)
         {
             CookieOptions Options = new CookieOptions();
-            Options.Expires = DateTime.Now.AddDays(10);
+            Options.Expires = DateTime.Now.AddDays(7);
+            Options.IsEssential = true;
 
-            _context.HttpContext.Response.Cookies.Append(key, Valor, Options);
+            var ValorCrypt = StringCipher.Encrypt(Valor, _configuration.GetValue<string>("KeyCrypt"));
+
+            _context.HttpContext.Response.Cookies.Append(Key, ValorCrypt, Options);
+        }
+        public void Atualizar(string Key, string Valor)
+        {
+            if (Existe(Key))
+            {
+                Remover(Key);
+            }
+            Cadastrar(Key, Valor);
+        }
+        public void Remover(string Key)
+        {
+            _context.HttpContext.Response.Cookies.Delete(Key);
+        }
+        public string Consultar(string Key, bool Cript = true)
+        {
+            var valor = _context.HttpContext.Request.Cookies[Key];
+
+            if (Cript)
+            {
+                valor = StringCipher.Decrypt(valor, _configuration.GetValue<string>("KeyCrypt"));
+            }
+            return valor;
         }
 
-        public void Atualizar(string key, string Valor)
-        {
-            if (Existe(key))
-                Remover(key);
-            Cadastrar(key, Valor);
-        }
 
-        public void Remover(string key)
+        public bool Existe(string Key)
         {
-            _context.HttpContext.Response.Cookies.Delete(key);
-        }
-
-        public string Consultar(string key)
-        {
-            return _context.HttpContext.Request.Cookies[key];
-        }
-        public bool Existe(string key)
-        {
-            if (_context.HttpContext.Request.Cookies[key] == null)
+            if (_context.HttpContext.Request.Cookies[Key] == null)
             {
                 return false;
             }
-            else
-            {
-                return true;
-            }
-        }
 
+            return true;
+        }
         public void RemoverTodos()
         {
             var ListaCookie = _context.HttpContext.Request.Cookies.ToList();
@@ -55,6 +70,8 @@ namespace LojaVirtual.Libraries.Cookie
             {
                 Remover(cookie.Key);
             }
+
         }
     }
+
 }
