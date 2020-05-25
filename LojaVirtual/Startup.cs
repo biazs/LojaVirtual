@@ -29,6 +29,9 @@ namespace LojaVirtual
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            /*
+             * Padrão Repository
+             */
             services.AddHttpContextAccessor();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<INewsletterRepository, NewsletterRepository>();
@@ -57,6 +60,7 @@ namespace LojaVirtual
             services.AddScoped<LojaVirtual.Libraries.Cookie.Cookie>();
             services.AddScoped<CarrinhoCompra>();
 
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -68,7 +72,7 @@ namespace LojaVirtual
             services.AddMemoryCache();
             services.AddSession(options =>
             {
-
+                options.Cookie.IsEssential = true;
             });
 
             services.AddScoped<Session>();
