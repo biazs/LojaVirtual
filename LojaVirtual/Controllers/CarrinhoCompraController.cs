@@ -49,7 +49,7 @@ namespace LojaVirtual.Controllers
             }
             else
             {
-                var item = new ProdutoItem() { Id = id, QuantidadeProdutoCarrinho = 1 };
+                var item = new ProdutoItem() { Id = id, QuantidadeProdutoCarrinho = 1 }; //TODO: conferir
                 _carrinhoCompra.Cadastrar(item);
 
                 return RedirectToAction(nameof(Index));
