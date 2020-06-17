@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using LojaVirtual.Models;
+using LojaVirtual.Models.ProdutoAgregador;
 using X.PagedList;
 
 namespace LojaVirtual.Repositories.Contracts

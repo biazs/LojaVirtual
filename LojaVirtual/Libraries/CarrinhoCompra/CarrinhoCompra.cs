@@ -1,87 +1,104 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using LojaVirtual.Models.ProdutoAgregador;
 using Newtonsoft.Json;
 
 namespace LojaVirtual.Libraries.CarrinhoCompra
 {
-
     public class CarrinhoCompra
     {
-        private string key = "Carrinho.Compras";
+        private string Key = "Carrinho.Compras";
         private Cookie.Cookie _cookie;
+
         public CarrinhoCompra(Cookie.Cookie cookie)
         {
             _cookie = cookie;
         }
 
-        /* Adicionar item, remover item, alterar quantidade*/
-
-        public void Cadastrar(Item item)
+        /*
+         * CRUD - Cadastrar, Read, Update, Delete
+         * Adicionar Item, Remover Item, Alterar Quantidade
+         */
+        public void Cadastrar(ProdutoItem item)
         {
-            if (_cookie.Existe(key))
+            List<ProdutoItem> Lista;
+            if (_cookie.Existe(Key))
             {
+                Lista = Consultar();
+                var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == item.Id);
 
+                if (ItemLocalizado != null)
+                {
+                    Lista.Add(item);
+                }
+                else
+                {
+                    ItemLocalizado.Quantidade = ItemLocalizado.Quantidade + 1;
+                }
             }
             else
             {
+                Lista = new List<ProdutoItem>();
+                Lista.Add(item);
+            }
 
+            Salvar(Lista);
+        }
+        public void Atualizar(ProdutoItem item)
+        {
+            var Lista = Consultar();
+            var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == item.Id);
+
+            if (ItemLocalizado != null)
+            {
+                ItemLocalizado.Quantidade = item.Quantidade;
+                Salvar(Lista);
+            }
+        }
+        public void Remover(ProdutoItem item)
+        {
+            var Lista = Consultar();
+            var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == item.Id);
+
+            if (ItemLocalizado != null)
+            {
+                Lista.Remove(ItemLocalizado);
+                Salvar(Lista);
             }
         }
 
-        //public void Atualizar(string key, string Valor)
-        //{
-        //    if (Existe(key))
-        //        Remover(key);
-        //    Cadastrar(key, Valor);
-        //}
-
-        //public void Remover(string key)
-        //{
-        //    _context.HttpContext.Response.Cookies.Delete(key);
-        //}
-
-        public List<Item> Consultar()
+        public List<ProdutoItem> Consultar()
         {
-            if (_cookie.Existe(key))
+            if (_cookie.Existe(Key))
             {
-                string valor = _cookie.Consultar(key);
-                return JsonConvert.DeserializeObject<List<Item>>(valor);
+                string valor = _cookie.Consultar(Key);
+                return JsonConvert.DeserializeObject<List<ProdutoItem>>(valor);
             }
             else
             {
-                return new List<Item>();
+                return new List<ProdutoItem>();
             }
         }
-        //public bool Existe(string key)
-        //{
-        //    if (_context.HttpContext.Request.Cookies[key] == null)
-        //    {
-        //        return false;
-        //    }
-        //    else
-        //    {
-        //        return true;
-        //    }
-        //}
 
-        //public void RemoverTodos()
-        //{
-        //    var ListaCookie = _context.HttpContext.Request.Cookies.ToList();
-        //    foreach (var cookie in ListaCookie)
-        //    {
-        //        Remover(cookie.Key);
-        //    }
-        //}
+        public void Salvar(List<ProdutoItem> Lista)
+        {
+            string Valor = JsonConvert.SerializeObject(Lista);
+            _cookie.Cadastrar(Key, Valor);
+        }
 
+        public bool Existe(string Key)
+        {
+            if (_cookie.Existe(Key))
+            {
+                return false;
+            }
 
+            return true;
+        }
+        public void RemoverTodos()
+        {
+            _cookie.Remover(Key);
+        }
 
-
-
-    }
-
-    public class Item
-    {
-        public int? Id { get; set; }
-        public int? Quantidade { get; set; }
     }
 }
-

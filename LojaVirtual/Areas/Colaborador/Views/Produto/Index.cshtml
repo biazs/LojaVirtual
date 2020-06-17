@@ -1,4 +1,4 @@
-﻿@model X.PagedList.IPagedList<LojaVirtual.Models.Produto>
+﻿@model X.PagedList.IPagedList<LojaVirtual.Models.ProdutoAgregador.Produto>
 @{
     ViewData["Title"] = "Index";
     var pesquisa = Context.Request.Query["pesquisa"];
@@ -53,8 +53,8 @@
                         <td>@produto.CategoriaId</td>
                         <td>@produto.Valor</td>
                         <td>
-                            <a asp-action="Atualizar" asp-route-id="@produto.Id" class="btn btn-secondary">Atualizar</a>                            
-                            <a asp-action="Excluir" asp-route-id="@produto.Id" class="btn btn-danger">Excluir</a>                            
+                            <a asp-action="Atualizar" asp-route-id="@produto.Id" class="btn btn-secondary">Atualizar</a>
+                            <a asp-action="Excluir" asp-route-id="@produto.Id" class="btn btn-danger">Excluir</a>
                         </td>
                     </tr>
                 }
