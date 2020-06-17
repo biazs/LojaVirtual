@@ -35,7 +35,7 @@ namespace LojaVirtual.Controllers
                 produtoItemCompleto.Add(produtoItem);
             }
 
-            return View();
+            return View(produtoItemCompleto);
         }
 
         //Item ID = ID Produto
@@ -49,7 +49,7 @@ namespace LojaVirtual.Controllers
             }
             else
             {
-                var item = new ProdutoItem() { Id = id, QuantidadeProdutoCarrinho = 1 }; //TODO: conferir erro
+                var item = new ProdutoItem() { Id = id, QuantidadeProdutoCarrinho = 1 };
                 _carrinhoCompra.Cadastrar(item);
 
                 return RedirectToAction(nameof(Index));
